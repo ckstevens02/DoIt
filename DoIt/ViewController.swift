@@ -30,7 +30,13 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
-        cell.textLabel?.text = "Hello"
+        let task = tasks[indexPath.row]
+        if task.important == true {
+            cell.textLabel?.text = "❗️\(task.name)"
+        }
+        else {
+            cell.textLabel?.text = task.name
+        }
         return cell
     }
   
@@ -50,5 +56,9 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         return [task1, task2, task3]
     }
 
+    @IBAction func addItem(_ sender: Any) {
+        
+    performSegue(withIdentifier: "addItemScreen", sender: nil)
+    }
 }
 
