@@ -14,6 +14,9 @@ class TasksViewController: UIViewController, UITableViewDataSource, UITableViewD
     
     var tasks : [Task] = []
     
+    //identifying which rowNumber is chosen
+    var rowNumber = 0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -39,6 +42,18 @@ class TasksViewController: UIViewController, UITableViewDataSource, UITableViewD
         }
         return cell
     }
+    
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        //updating row number
+        rowNumber = indexPath.row
+        
+        let task = tasks[indexPath.row]
+        
+        performSegue(withIdentifier: "selectTask", sender: task)
+    }
+    
   
     func createTask() -> [Task]{
         let task1 = Task()
@@ -62,8 +77,18 @@ class TasksViewController: UIViewController, UITableViewDataSource, UITableViewD
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let nextVC = segue.destination as! AddScreenViewController
-        nextVC.previousVC = self
+        if segue.identifier == "addItemScreen" {
+            let nextVC = segue.destination as! AddScreenViewController
+            nextVC.previousVC = self
+        }
+        if segue.identifier == "selectTask" {
+            let nextVC = segue.destination as! CompletedViewController
+            
+            //this sends over the task that is clicked
+            nextVC.task = sender as! Task
+            
+            nextVC.tasksVC = self
+        }
         
     }
 }

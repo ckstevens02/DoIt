@@ -46,11 +46,59 @@
                     <connections>
                         <outlet property="tableView" destination="ZJl-xT-kmw" id="e7W-NR-Uod"/>
                         <segue destination="qRT-YR-Tig" kind="show" identifier="addItemScreen" id="6sK-16-Y4R"/>
+                        <segue destination="EyR-kx-RhS" kind="show" identifier="selectTask" id="Hrq-OC-3NT"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="860" y="138.98050974512745"/>
+        </scene>
+        <!--Completed View Controller-->
+        <scene sceneID="U7F-Je-IIU">
+            <objects>
+                <viewController id="EyR-kx-RhS" customClass="CompletedViewController" customModule="DoIt" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="B80-Zd-Mlk"/>
+                        <viewControllerLayoutGuide type="bottom" id="jW6-cX-euI"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="0Oc-g3-CMU">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Chore" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BtA-Dy-ylV">
+                                <rect key="frame" x="66" y="120" width="243" height="36"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="i8Y-Io-hV1">
+                                <rect key="frame" x="129" y="216" width="117" height="34"/>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
+                                <state key="normal" title="Completed✔️">
+                                    <color key="titleColor" red="0.78730165159999999" green="0.20282758300000001" blue="0.16459240789999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="completeButton:" destination="EyR-kx-RhS" eventType="touchUpInside" id="sYS-a7-h69"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailingMargin" secondItem="BtA-Dy-ylV" secondAttribute="trailing" constant="50" id="2Mi-iK-y0w"/>
+                            <constraint firstItem="BtA-Dy-ylV" firstAttribute="leading" secondItem="0Oc-g3-CMU" secondAttribute="leadingMargin" constant="50" id="InX-76-jbZ"/>
+                            <constraint firstItem="i8Y-Io-hV1" firstAttribute="top" secondItem="BtA-Dy-ylV" secondAttribute="bottom" constant="60" id="VJT-HT-oVD"/>
+                            <constraint firstItem="BtA-Dy-ylV" firstAttribute="centerX" secondItem="0Oc-g3-CMU" secondAttribute="centerX" id="brB-gu-DZR"/>
+                            <constraint firstItem="BtA-Dy-ylV" firstAttribute="top" secondItem="B80-Zd-Mlk" secondAttribute="bottom" constant="100" id="cnP-sk-weu"/>
+                            <constraint firstItem="i8Y-Io-hV1" firstAttribute="centerX" secondItem="0Oc-g3-CMU" secondAttribute="centerX" id="jyi-GV-hWw"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="choreLabel" destination="BtA-Dy-ylV" id="Aar-5Z-06D"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="MzN-Ht-ajE" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="860" y="863.1184407796103"/>
         </scene>
         <!--Add Screen View Controller-->
         <scene sceneID="SrS-qL-BpQ">
