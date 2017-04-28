@@ -14,17 +14,22 @@ class TasksViewController: UIViewController, UITableViewDataSource, UITableViewD
     
     var tasks : [Task] = []
     
-    //identifying which rowNumber is chosen
-    var rowNumber = 0
-    
+    //viewDidLoad only gets called the first time that the viewController is loaded
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        tasks = createTask()
         
         tableView.delegate = self
         tableView.dataSource = self
+    }
+    
+    //notifies the viewController that something new is about to be added to the screen
+    override func viewWillAppear(_ animated: Bool) {
+        getTasks()
+        
+        //make sure that the new data is reloaded
+        tableView.reloadData()
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -35,7 +40,7 @@ class TasksViewController: UIViewController, UITableViewDataSource, UITableViewD
         let cell = UITableViewCell()
         let task = tasks[indexPath.row]
         if task.important == true {
-            cell.textLabel?.text = "❗️\(task.name)"
+            cell.textLabel?.text = "❗️" + task.name!
         }
         else {
             cell.textLabel?.text = task.name
@@ -45,49 +50,42 @@ class TasksViewController: UIViewController, UITableViewDataSource, UITableViewD
     
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        //updating row number
-        rowNumber = indexPath.row
-        
+
         let task = tasks[indexPath.row]
         
         performSegue(withIdentifier: "selectTask", sender: task)
     }
     
-  
-    func createTask() -> [Task]{
-        let task1 = Task()
-        task1.name = "Walk the dog"
-        task1.important = false
-        
-        let task2 = Task()
-        task2.name = "Groceries"
-        task2.important = true
-        
-        let task3 = Task()
-        task3.name = "Mow lawn"
-        task3.important = false
-        
-        return [task1, task2, task3]
-    }
 
     @IBAction func addItem(_ sender: Any) {
         
     performSegue(withIdentifier: "addItemScreen", sender: nil)
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "addItemScreen" {
-            let nextVC = segue.destination as! AddScreenViewController
-            nextVC.previousVC = self
+    
+    //fetches all the data from coreData and then appends it to the list called tasks
+    func getTasks(){
+        let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+        
+        //using do/catch in case an error is thrown
+        do{
+            //fetch the data from our class called Task and put it into the array called tasks
+            tasks = try context.fetch(Task.fetchRequest()) as! [Task]
         }
+        catch{
+            //in case of an error, do the 'catch'
+            print("Error!!")
+        }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+       
         if segue.identifier == "selectTask" {
             let nextVC = segue.destination as! CompletedViewController
             
             //this sends over the task that is clicked
-            nextVC.task = sender as! Task
+            nextVC.task = sender as? Task
             
-            nextVC.tasksVC = self
         }
         
     }

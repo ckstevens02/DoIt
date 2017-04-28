@@ -26,16 +26,18 @@ class AddScreenViewController: UIViewController {
     @IBAction func addTaskButton(_ sender: Any) {
         //create a task from the outlet
         
-        let task = Task()
+        //refers to the contents of the internal database storage
+        let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+        
+        //getting access to coreData
+        let task = Task(context: context)
+        
         task.name = taskName.text!
         task.important = importantSwitch.isOn
         
-        //add task to the list
+        //saves to coreData
+        (UIApplication.shared.delegate as! AppDelegate).saveContext()
         
-        previousVC.tasks.append(task)
-        
-        //updates the tableView
-        previousVC.tableView.reloadData()
         
         //pops over to the previous screen when clicked
         navigationController?.popViewController(animated: true)

@@ -9,45 +9,41 @@
 import UIKit
 
 class CompletedViewController: UIViewController {
-
+    
     @IBOutlet weak var choreLabel: UILabel!
     
-    //tasksVC
-    var tasksVC = TasksViewController()
-    
-    //recording the rowNumber index to delete
-    var rowNumber = 0
     
     //task is brought in by the sender segue
-    var task = Task()
-
+    //setting to be a Task optional
+    var task : Task? = nil
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         //assigning the chore label to the name of the task
-        if task.important == true {
-            choreLabel.text = "❗️\(task.name)"
+        if task!.important == true {
+            choreLabel.text = "❗️\(task!.name!)"
         }
         else {
-            choreLabel.text = task.name
+            choreLabel.text = task!.name!
         }
         
-        
     }
-
+    
     @IBAction func completeButton(_ sender: Any) {
         
-        //delete task to the list
+        let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
         
-        tasksVC.tasks.remove(at: tasksVC.rowNumber)
+        //deleting the task that was chosen
+        context.delete(task!)
         
-        //updates the tableView
-        tasksVC.tableView.reloadData()
+        //saving the new coreData
+        (UIApplication.shared.delegate as! AppDelegate).saveContext()
         
         //pops over to the previous screen when clicked
         navigationController?.popViewController(animated: true)
     }
-   
-
+    
+    
 }
