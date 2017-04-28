@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  TasksViewController.swift
 //  DoIt
 //
 //  Created by Christina Stevens on 4/27/17.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class TasksViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
     @IBOutlet weak var tableView: UITableView!
     
@@ -59,6 +59,12 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     @IBAction func addItem(_ sender: Any) {
         
     performSegue(withIdentifier: "addItemScreen", sender: nil)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let nextVC = segue.destination as! AddScreenViewController
+        nextVC.previousVC = self
+        
     }
 }
 
